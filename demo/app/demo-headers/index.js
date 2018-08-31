@@ -10,7 +10,8 @@ import Timeline, {
   SidebarHeader,
   CustomHeader,
   TimelineHeaders,
-  DateHeader
+  DateHeader,
+  TimelineStateConsumer,
 } from 'react-calendar-timeline'
 
 import generateFakeData from '../generate-fake-data'
@@ -98,10 +99,10 @@ export default class App extends Component {
         item =>
           item.id === itemId
             ? Object.assign({}, item, {
-                start: dragTime,
-                end: dragTime + (item.end - item.start),
-                group: group.id
-              })
+              start: dragTime,
+              end: dragTime + (item.end - item.start),
+              group: group.id
+            })
             : item
       )
     })
@@ -117,9 +118,9 @@ export default class App extends Component {
         item =>
           item.id === itemId
             ? Object.assign({}, item, {
-                start: edge === 'left' ? time : item.start,
-                end: edge === 'left' ? item.end : time
-              })
+              start: edge === 'left' ? time : item.start,
+              end: edge === 'left' ? item.end : time
+            })
             : item
       )
     })
@@ -186,6 +187,36 @@ export default class App extends Component {
         rightSidebarContent={<div>Above The Right</div>}
       >
         <TimelineHeaders className="header-background">
+          <CustomHeader>
+            {({
+              headerContext: { intervals },
+              getRootProps,
+              getIntervalProps,
+              showPeriod
+            }) => {
+              return (
+                <TimelineStateConsumer>{({getLeftOffsetFromDate}) => {
+                  const left = getLeftOffsetFromDate(moment().valueOf())
+                  const right = getLeftOffsetFromDate(moment().add(6,'hour').valueOf())
+                  const intervalStyle = {
+                    // height: 30,
+                    lineHeight: '30px',
+                    textAlign: 'center',
+                    borderLeft: '1px solid black',
+                    cursor: 'pointer',
+                    backgroundColor: 'Turquoise',
+                    color: 'white',
+                    left: left,
+                    width: right-left,
+                    position: 'absolute'
+                  }
+                  return <div {...getRootProps({ style: { height: 30 } })}>
+                    <div style={intervalStyle}>Hiiii</div>
+                  </div>
+                }}</TimelineStateConsumer>
+              )
+            }}
+          </CustomHeader>
           <SidebarHeader>
             {({ getRootProps }) => {
               console.log('left')
