@@ -39,6 +39,7 @@ export default class GroupRows extends Component {
     let lines = []
 
     for (let i = 0; i < lineCount; i++) {
+      const group = groups[i]
       lines.push(
         <GroupRow
           order={i}
@@ -48,7 +49,7 @@ export default class GroupRows extends Component {
           onDoubleClick={onRowDoubleClick}
           key={`horizontal-line-${i}`}
           isEvenRow={i % 2 === 0}
-          group={groups[i]}
+          group={group}
           horizontalLineClassNamesForGroup={horizontalLineClassNamesForGroup}
           canvasWidth={canvasWidth}
           height={groupHeights[i]}
