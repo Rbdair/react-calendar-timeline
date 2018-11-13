@@ -92,7 +92,7 @@ class ItemHeader extends React.PureComponent {
     } = this.props
     const items = itemWithNoIds.map(item => ({ ...item, group: '1' }))
     const order = getGroupOrders(groups, keys)
-    const itemDimensions = this.props.items.map(item => {
+    let itemDimensions = this.props.items.map(item => {
       const itemDimension = calculateDimensions({
         itemTimeStart: _get(item, this.props.keys.itemTimeStartKey),
         itemTimeEnd: _get(item, this.props.keys.itemTimeEndKey),
@@ -110,7 +110,7 @@ class ItemHeader extends React.PureComponent {
         id: _get(item, keys.itemIdKey),
         dimensions: {
           ...itemDimension,
-          order: 0,
+          order: {"index":0,"group":groups[0]},
           top: null,
           stack: stackItems,
           height: itemHeight,
@@ -150,14 +150,14 @@ class ItemHeader extends React.PureComponent {
 class Item extends React.PureComponent {
   static propTypes = {
     item: PropTypes.object.isRequired,
-    timelineContext: PropTypes.objectOf({
+    timelineContext: PropTypes.shape({
       timelineWidth: PropTypes.number,
       visibleTimeStart: PropTypes.number,
       visibleTimeEnd: PropTypes.number,
       canvasTimeStart: PropTypes.number,
       canvasTimeEnd: PropTypes.number
     }).isRequired,
-    itemContext: PropTypes.objectOf({
+    itemContext: PropTypes.shape({
       dimensions: PropTypes.object,
       width: PropTypes.number
     }).isRequired,
