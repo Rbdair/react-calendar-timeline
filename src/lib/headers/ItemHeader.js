@@ -4,8 +4,7 @@ import CustomHeader from './CustomHeader'
 import PropTypes from 'prop-types'
 import {
   calculateDimensions,
-  stack,
-  nostack,
+  stackAll,
   getGroupOrders
 } from '../utility/calendar'
 import { _get } from '../utility/generic'
@@ -120,9 +119,7 @@ class ItemHeader extends React.PureComponent {
       }
     })
 
-    const stackingMethod = stackItems ? stack : nostack
-    //Get a new array of groupOrders holding the stacked items
-    const { height } = stackingMethod(itemDimensions, order, itemHeight, groups)
+    const { height } = stackAll(itemDimensions, order, itemHeight, stackItems)
 
     return (
       <CustomHeader>
