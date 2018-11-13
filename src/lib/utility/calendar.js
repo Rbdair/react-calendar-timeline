@@ -431,7 +431,7 @@ export function stackItems(
   // Get the order of groups based on their id key
   const groupOrders = getGroupOrders(groups, keys)
 
-
+  
   let dimensionItems = visibleItems.reduce((memo, item) => {
     const itemId = _get(item, keys.itemIdKey)
     const isDragging = itemId === draggingItem
@@ -458,13 +458,11 @@ export function stackItems(
       dimension.stack = !item.isOverlay
       dimension.height = lineHeight * itemHeightRatio
       dimension.isDragging = isDragging
-
       memo.push({
         id: itemId,
         dimensions: dimension
       })
     }
-
     return memo
   }, [])
 
@@ -475,7 +473,7 @@ export function stackItems(
     lineHeight,
     stackItems
   )
-
+  
   return { dimensionItems, height, groupHeights, groupTops }
 }
 
