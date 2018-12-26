@@ -261,12 +261,13 @@ export default class Item extends Component {
         if (this.state.dragging) {
           let dragTime = this.dragTime(e)
           let dragGroupDelta = this.dragGroupDelta(e)
-          console.log(dragGroupDelta)
           if (this.props.moveResizeValidator) {
             dragTime = this.props.moveResizeValidator(
               'move',
               this.props.item,
-              dragTime
+              dragTime,
+              undefined,
+              _get(this.props.dimensions.order.group, this.props.keys.groupIdKey)
             )
           }
 
@@ -293,7 +294,9 @@ export default class Item extends Component {
               dragTime = this.props.moveResizeValidator(
                 'move',
                 this.props.item,
-                dragTime
+                dragTime,
+                undefined,
+                _get(this.props.dimensions.order.group, this.props.keys.groupIdKey)
               )
             }
 
@@ -336,11 +339,13 @@ export default class Item extends Component {
           let resizeTime = this.resizeTimeSnap(this.timeFor(e))
 
           if (this.props.moveResizeValidator) {
+            console.log(this.props.dimensions)
             resizeTime = this.props.moveResizeValidator(
               'resize',
               this.props.item,
               resizeTime,
-              resizeEdge
+              resizeEdge,
+              _get(this.props.dimensions.order.group, this.props.keys.groupIdKey)
             )
           }
 
@@ -363,7 +368,8 @@ export default class Item extends Component {
               'resize',
               this.props.item,
               resizeTime,
-              resizeEdge
+              resizeEdge,
+              _get(this.props.dimensions.order.group, this.props.keys.groupIdKey)
             )
           }
 

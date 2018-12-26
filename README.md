@@ -307,7 +307,7 @@ Called when the canvas is clicked by the right button of the mouse. Note: If thi
 
 Called when the timeline is zoomed, either via mouse/pinch zoom or clicking header to change timeline units
 
-## moveResizeValidator(action, itemId, time, resizeEdge)
+## moveResizeValidator(action, itemId, time, resizeEdge, groupId)
 
 This function is called when an item is being moved or resized. It's up to this function to return a new version of `change`, when the proposed move would violate business logic.
 
@@ -316,6 +316,8 @@ The argument `action` is one of `move` or `resize`.
 The argument `resizeEdge` is when resizing one of `left` or `right`.
 
 The argument `time` describes the proposed new time for either the start time of the item (for move) or the start or end time (for resize).
+
+The argument `groupId` is the new group id to be moved to.
 
 The function must return a new unix timestamp in milliseconds... or just `time` if the proposed new time doesn't interfere with business logic.
 

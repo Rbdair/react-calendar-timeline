@@ -1016,8 +1016,6 @@ export default class ReactCalendarTimeline extends Component {
       height: `${height}px`
     }
 
-    console.log("render", width)
-
     return (
       <TimelineStateProvider
         visibleTimeStart={visibleTimeStart}
