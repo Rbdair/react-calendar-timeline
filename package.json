@@ -18,10 +18,10 @@
     "lib",
     "src"
   ],
-  "homepage": "https://github.com/namespace-ee/react-calendar-timeline",
+  "homepage": "https://github.com/FoothillSolutions/react-calendar-timeline",
   "repository": {
     "type": "git",
-    "url": "https://github.com/namespace-ee/react-calendar-timeline.git"
+    "url": "https://github.com/FoothillSolutions/react-calendar-timeline.git"
   },
   "author": "Marius Andra <marius.andra@gmail.com>",
   "contributors": [
