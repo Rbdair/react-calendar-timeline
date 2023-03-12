@@ -5,9 +5,7 @@ bower_components
 .idea
 .sass-cache
 modules
-build
 gh-pages
-/lib
 package-lock.json
 # vscode stuff
 .vscode

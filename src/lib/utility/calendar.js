@@ -68,8 +68,8 @@ export function iterateTimes(start, end, unit, timeSteps, callback) {
   }
 
   while (time.valueOf() < end) {
-    let nextTime = moment(time).add(timeSteps[unit] || 1, `${unit}s`).startOf(`${unit}s`);
-    let endTime = moment(time).endOf(`${unit}s`)
+    let nextTime = moment(time).utc().add(`${unit}s`, timeSteps[unit] || 1).startOf(`${unit}s`);
+    let endTime = moment(time).utc().endOf(`${unit}s`)
     callback(time, endTime)
     time = nextTime
   }
