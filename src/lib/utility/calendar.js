@@ -387,7 +387,7 @@ export function stackAll(itemsDimensions, groupOrders, lineHeight, stackItems) {
     // Is group being stacked?
     const isGroupStacked =
       group.stackItems !== undefined ? group.stackItems : stackItems
-    const { groupHeight, verticalMargin } = stackGroup(
+    const { groupHeight } = stackGroup(
       itemsDimensions,
       isGroupStacked,
       lineHeight,
@@ -538,17 +538,10 @@ export function stackTimelineItems(
  * @param {*} width
  * @param {*} buffer
  */
-export function getCanvasWidth(width, buffer = 3) {
+export function getCanvasWidth(width, buffer) {
   return width * buffer
 }
 
-/**
- * get canvas width factor
- * @param {*} shouldExpandCanvas
- */
- export function getCanvasWidthFactor(shouldExpandCanvas = true) {
-  return shouldExpandCanvas? 3 : 1;
-}
 /**
  * get item's position, dimensions and collisions
  * @param {*} item
@@ -646,16 +639,13 @@ export function getItemWithInteractions({
  export function getCanvasBoundariesFromVisibleTime(
   visibleTimeStart,
   visibleTimeEnd,
-  shouldExpandCanvasBoundaries = true
+  buffer,
 ) {
-  if(!shouldExpandCanvasBoundaries)
-  {
-    return [visibleTimeStart, visibleTimeEnd];
-  }
   const zoom = visibleTimeEnd - visibleTimeStart
-  const canvasTimeStart = visibleTimeStart - (visibleTimeEnd - visibleTimeStart)
-  const canvasTimeEnd = canvasTimeStart + zoom * 3
-  return [canvasTimeStart, canvasTimeEnd];
+  // buffer - 1 (1 is visible area) divided by 2 (2 is the buffer split on the right and left of the timeline)
+  const canvasTimeStart = visibleTimeStart - (zoom * (buffer - 1 )/2)
+  const canvasTimeEnd = canvasTimeStart + zoom * buffer
+  return [canvasTimeStart, canvasTimeEnd]
 }
 
 /**
@@ -679,7 +669,9 @@ export function getItemWithInteractions({
   props,
   state
 ) {
+  const buffer = props.buffer;
   const oldCanvasTimeStart = state.canvasTimeStart
+  const oldCanvasTimeEnd = state.canvasTimeEnd
   const oldZoom = state.visibleTimeEnd - state.visibleTimeStart
   const newZoom = visibleTimeEnd - visibleTimeStart
   const newState = { visibleTimeStart, visibleTimeEnd }
@@ -688,15 +680,15 @@ export function getItemWithInteractions({
   const canKeepCanvas =
     newZoom === oldZoom &&
     visibleTimeStart >= oldCanvasTimeStart + oldZoom * 0.5 &&
-    visibleTimeStart <= oldCanvasTimeStart + oldZoom * 1.5 &&
+    visibleTimeStart <= oldCanvasTimeEnd - oldZoom * 1.5 &&
     visibleTimeEnd >= oldCanvasTimeStart + oldZoom * 1.5 &&
-    visibleTimeEnd <= oldCanvasTimeStart + oldZoom * 2.5
+    visibleTimeEnd <= oldCanvasTimeEnd - oldZoom * 0.5
 
   if (!canKeepCanvas || forceUpdateDimensions) {
     const [canvasTimeStart, canvasTimeEnd] = getCanvasBoundariesFromVisibleTime(
       visibleTimeStart,
       visibleTimeEnd,
-      props.resizableCanvas
+      buffer
     )
     newState.canvasTimeStart = canvasTimeStart
     newState.canvasTimeEnd = canvasTimeEnd
@@ -705,7 +697,7 @@ export function getItemWithInteractions({
       ...newState
     }
 
-    const canvasWidth = getCanvasWidth(mergedState.width, state.canvasWidthFactor)
+    const canvasWidth = getCanvasWidth(mergedState.width, props.buffer)
 
     // The canvas cannot be kept, so calculate the new items position
     Object.assign(
