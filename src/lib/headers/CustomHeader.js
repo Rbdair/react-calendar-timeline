@@ -64,14 +64,14 @@ export class CustomHeader extends React.Component {
     return false
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      nextProps.canvasTimeStart !== this.props.canvasTimeStart ||
-      nextProps.canvasTimeEnd !== this.props.canvasTimeEnd ||
-      nextProps.canvasWidth !== this.props.canvasWidth ||
-      nextProps.unit !== this.props.unit ||
-      nextProps.timeSteps !== this.props.timeSteps ||
-      nextProps.showPeriod !== this.props.showPeriod
+      prevProps.canvasTimeStart !== this.props.canvasTimeStart ||
+      prevProps.canvasTimeEnd !== this.props.canvasTimeEnd ||
+      prevProps.canvasWidth !== this.props.canvasWidth ||
+      prevProps.unit !== this.props.unit ||
+      prevProps.timeSteps !== this.props.timeSteps ||
+      prevProps.showPeriod !== this.props.showPeriod
     ) {
       const {
         canvasTimeStart,
@@ -81,7 +81,7 @@ export class CustomHeader extends React.Component {
         timeSteps,
         showPeriod,
         getLeftOffsetFromDate
-      } = nextProps
+      } = this.props
 
       const intervals = this.getHeaderIntervals({
         canvasTimeStart,
