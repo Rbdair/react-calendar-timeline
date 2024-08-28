@@ -10,8 +10,7 @@ import Timeline, {
   SidebarHeader,
   CustomHeader,
   TimelineHeaders,
-  DateHeader,
-  ItemHeader
+  DateHeader
 } from 'react-calendar-timeline'
 
 import generateFakeData from '../generate-fake-data'
@@ -40,7 +39,6 @@ export default class App extends Component {
     super(props)
 
     const { groups, items } = generateFakeData()
-    const {items: headerItems } = generateFakeData(2, 5, 1)
     const defaultTimeStart = moment()
       .startOf('day')
       .toDate()
@@ -55,8 +53,7 @@ export default class App extends Component {
       defaultTimeStart,
       defaultTimeEnd,
       format: false,
-      showHeaders: false,
-      headerItems,
+      showHeaders: false
     }
   }
 
@@ -65,9 +62,6 @@ export default class App extends Component {
   }
 
   handleCanvasClick = (groupId, time) => {
-    this.setState(state => ({
-      groups: state.groups
-    }))
     console.log('Canvas clicked', groupId, moment(time).format())
   }
 
@@ -85,9 +79,6 @@ export default class App extends Component {
 
   handleItemSelect = (itemId, _, time) => {
     console.log('Selected: ' + itemId, moment(time).format())
-    this.setState((state)=>({
-      groups: state.groups.filter(_ => Math.random() > 0.5 )
-    }))
   }
 
   handleItemDoubleClick = (itemId, _, time) => {
@@ -184,6 +175,7 @@ export default class App extends Component {
           canSelect
           itemsSorted
           itemTouchSendsClick={false}
+          stackItems
           itemHeightRatio={0.75}
           defaultTimeStart={defaultTimeStart}
           defaultTimeEnd={defaultTimeEnd}
@@ -200,62 +192,30 @@ export default class App extends Component {
           // moveResizeValidator={this.moveResizeValidator}
           rightSidebarWidth={150}
           rightSidebarContent={<div>Above The Right</div>}
-          stackItems="space"
-          >
+        >
           <TimelineHeaders className="header-background">
-            <SidebarHeader>
-              {({ getRootProps }) => {
-                return <div {...getRootProps()}>Left</div>
-              }}
-            </SidebarHeader>
-            <SidebarHeader variant="right">
-              {({ getRootProps }) => {
-                return <div {...getRootProps()}>Right</div>
-              }}
-            </SidebarHeader>
-            <ItemHeader
-              className="custom-class"
-              style={{
-                backgroundColor: "blue"
-              }}
-              items={this.state.headerItems}
-              itemRenderer={({ item, getRootProps }) => {
-                return (
-                  <div
-                    {...getRootProps({
-                      style: {
-                        border: '1px solid black',
-                        color: 'white'
-                      }
-                    })}
-                  >
-                    {item.title}
-                  </div>
-                )
-              }}
-            />
-            <ItemHeader items={this.state.headerItems} stackItems />
-            <ItemHeader items={[]} stackItems />
+            <SidebarHeader/>
             <DateHeader
               labelFormat={this.state.format ? 'd' : undefined}
-              primaryHeader
+              unit= "primaryHeader"
             />
-            <DateHeader style={{ height: 50 }} />
-            <CustomHeader unit="year" props={{ hey: 'you' }}>
+            <DateHeader height={50} />
+            <CustomHeader unit="year" headerData={{ hey: 'you' }}>
               {(
                 {
                   headerContext: { intervals },
                   getRootProps,
                   getIntervalProps,
-                  showPeriod
+                  showPeriod,
+                  data,
                 },
-                props
+                
               ) => {
+                console.log('props', data)
                 return (
-                  <div {...getRootProps({ style: { height: 30 } })}>
+                  <div {...getRootProps()}>
                     {intervals.map(interval => {
                       const intervalStyle = {
-                        // height: 30,
                         lineHeight: '30px',
                         textAlign: 'center',
                         borderLeft: '1px solid black',
@@ -291,10 +251,9 @@ export default class App extends Component {
                 showPeriod
               }) => {
                 return (
-                  <div {...getRootProps({ style: { height: 30 } })}>
+                  <div {...getRootProps()}>
                     {intervals.map(interval => {
                       const intervalStyle = {
-                        // height: 30,
                         lineHeight: '30px',
                         textAlign: 'center',
                         borderLeft: '1px solid black',
@@ -330,7 +289,7 @@ export default class App extends Component {
                 showPeriod
               }) => {
                 return (
-                  <div {...getRootProps({ style: { height: 30 } })}>
+                  <div {...getRootProps()}>
                     {intervals.map(interval => {
                       const intervalStyle = {
                         lineHeight: '30px',
@@ -359,12 +318,13 @@ export default class App extends Component {
             <DateHeader
               unit="week"
               labelFormat="MM/DD"
-              style={{ height: 50 }}
-              props={{ hey: 'date header' }}
+              height={50}
+              headerData={{ hey: 'date header' }}
               intervalRenderer={(
-                { getIntervalProps, intervalContext },
-                props
+                { getIntervalProps, intervalContext, data },
+                
               ) => {
+                console.log('intervalRenderer props', data)
                 return (
                   <div {...getIntervalProps()}>
                     {intervalContext.intervalText}
@@ -376,9 +336,9 @@ export default class App extends Component {
               ? [
                   <DateHeader
                     labelFormat={this.state.format ? 'd' : undefined}
-                    primaryHeader
+                    unit = "primaryHeader"
                   />,
-                  <DateHeader style={{ height: 50 }} />
+                  <DateHeader height={50} />
                 ]
               : null}
           </TimelineHeaders>

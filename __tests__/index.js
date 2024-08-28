@@ -132,7 +132,7 @@ xdescribe('Timeline', () => {
       <Timeline
         groups={[]}
         items={items}
-        stackItems="space"
+        stackItems
         defaultTimeStart={moment('1995-12-25').add(-12, 'hour')}
         defaultTimeEnd={moment('1995-12-25').add(12, 'hour')}
       >
@@ -149,7 +149,6 @@ xdescribe('Timeline', () => {
     expect(typeof pluginProps.visibleTimeStart).toBe('number')
     expect(typeof pluginProps.visibleTimeEnd).toBe('number')
     expect(typeof pluginProps.height).toBe('number')
-    expect(typeof pluginProps.headerHeight).toBe('number')
 
     expect(typeof pluginProps.minUnit).toBe('string')
 

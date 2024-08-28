@@ -1,10 +1,17 @@
 import { defaultKeys } from 'lib/default-config'
 import {items} from './itemsAndGroups'
+
+export const visibleTimeStart = 1540501200000
+export const visibleTimeEnd = 1540587600000
+
 export const props = {
   keys: defaultKeys,
   lineHeight: 30,
-  stackItems: 'space',
-  itemHeightRatio: 0.75
+  stackItems: true,
+  itemHeightRatio: 0.75,
+  visibleTimeEnd,
+  visibleTimeStart,
+  buffer: 3,
 }
 
 export const propsNoStack = {
@@ -12,8 +19,6 @@ export const propsNoStack = {
   stackItems: false,
 }
 
-export const visibleTimeStart = 1540501200000
-export const visibleTimeEnd = 1540587600000
 
 export const state = {
   draggingItem: undefined,

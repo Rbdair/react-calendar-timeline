@@ -40,7 +40,9 @@ You can restrict the moving and resizing of items at the item level by providing
 
 ## Right Sidebar
 
-Adding a right sidebar is as easy as passing in a couple of props `rightSidebarWidth` and `rightSidebarContent`. Content in the right column is populated from the `rightTitle` property on the group.
+Adding a right sidebar is as easy as passing `rightSidebarWidth`. Content in the right column is populated from the `rightTitle` property on the group. 
+
+Note: If you are using Custom Headers then you need to add them with `SidebarHeader` with variant "right"
 
 [Example Codesandbox](https://codesandbox.io/s/j3wrw6rl4v)
 
@@ -58,8 +60,27 @@ Through group manipulation, you can achieve tree group views.
 
 Note that this is the user code manipulating groups to achieve tree group functionality. This example is an illustration of how you can achieve this functionality. This is not a feature that is directly supported by the library.
 
+## Controlled scroll
+
+Controlled visible port of the calendar using `visibleTimeStart` and `visibleTimeEnd`. This also limits scrolling by mouse and adds two buttons to change the visible port of the calendar
+
+[Example Codesandbox](https://codesandbox.io/s/timeline-demo-controlled-visible-time-no-scroll-659jb)
+
 ## Programmatically Scrolling
 
-Using `scrollRef` you can trigger scrolling and create an animation. This is an alternative to setting `visibleStartTime` and `visibleEndTime`.
+Using controlled scroll and react-spring to trigger scrolling and create an animation.
 
-[Example Codesandbox](https://codesandbox.io/s/3kq2503y8p)
+[Example Codesandbox](https://codesandbox.io/s/timeline-demo-programmatic-scroll-3kq2503y8p)
+
+## Sticky header
+
+Using `Timeline Header` you can make the header stick to the top of the page while scrolling down
+
+[Example Codesandbox](https://codesandbox.io/s/w6xvqzno4w)
+
+## InfoLabel 
+
+Native info label was removed with 0.26.0 and now the responsibility to render to render the Info Label is on the user. The example bellow has InfoLabel that matches exactly the removed label
+
+[Example Codesandbox](https://codesandbox.io/s/timeline-demo-info-label-neec9)
+
