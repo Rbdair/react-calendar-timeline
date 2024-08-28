@@ -1,5 +1,5 @@
 {
-"name": "@r365/react-calendar-timeline",
+  "name": "@r365/react-calendar-timeline",
   "version": "0.25.0-beta.22",
   "description": "react calendar timeline",
   "main": "lib/index.js",
